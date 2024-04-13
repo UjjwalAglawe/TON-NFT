@@ -5,11 +5,13 @@ import { useAsyncInitialize } from "./useAsyncInitialize";
 import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
 import { NFTCollection } from "../wrappers/NFTCollection";
-import { NftItem } from "../wrappers/NftItem";
+// import { NftItem } from "../wrappers/NftItem";
 
 export function useCounterContract() {
     const { client } = useTonClient();
     const { wallet , sender } = useTonConnect();
+    const sleep = (time: number) => new Promise((resolve) =>
+        setTimeout(resolve, time));
     // const [count, setCount] = useState<BigInt | null>(null);
     const forinti=0;
     const nftContract = useAsyncInitialize(async () => {
@@ -20,31 +22,31 @@ export function useCounterContract() {
         return client.open(Contract) as OpenedContract<NFTCollection>;
     }, [client, wallet]);
 
-    async function getData() {
-        const nftItemdata=await nftContract?.getGetCollectionData();
-        const  nftitemIndex=nftItemdata?.next_item_index; //might need -1
-        console.log("This is nftitemIndex",nftitemIndex);
+    // async function getData() {
+    //     const nftItemdata=await nftContract?.getGetCollectionData();
+    //     const  nftitemIndex=nftItemdata?.next_item_index; //might need -1
+    //     console.log("This is nftitemIndex",nftitemIndex);
 
 
         
-        // const nftItemAdress=await nftContract.getGetNftAddressByIndex(nftitemIndex);
-        const nftItemAdress=await nftContract?.getGetNftAddressByIndex(nftitemIndex);
+    //     // const nftItemAdress=await nftContract.getGetNftAddressByIndex(nftitemIndex);
+    //     const nftItemAdress=await nftContract?.getGetNftAddressByIndex(nftitemIndex);
 
-        console.log("NFT Item Address",nftItemAdress);
+    //     console.log("NFT Item Address",nftItemAdress);
 
-        return nftItemAdress;
-    }
+    //     return nftItemAdress;
+    // }
     
         
-        const nftItemContract=useAsyncInitialize(async ()=>{
-            if(!client) return;
-            console.log("Before nftItems");
-            const nftItemAdress2=getData();
-            const nftItems=NftItem.fromAddress(nftItemAdress2);
-            console.log("After nftItems");
-            return client.open(nftItems) as OpenedContract<NftItem>;
+    //     const nftItemContract=useAsyncInitialize(async ()=>{
+    //         if(!client) return;
+    //         console.log("Before nftItems");
+    //         const nftItemAdress2=getData();
+    //         const nftItems=NftItem.fromAddress(nftItemAdress2);
+    //         console.log("After nftItems");
+    //         return client.open(nftItems) as OpenedContract<NftItem>;
 
-        })
+    //     })
 
      async function Minting() {
         if (!nftContract) return;
@@ -56,12 +58,12 @@ export function useCounterContract() {
 
         console.log("This is tansaction",transcation);
         
+        await sleep(5000);
+        // if (!nftContract || !nftItemContract) return;
+        // const nftItemData=await nftItemContract?.getGetItemData();
+        // console.log("This is NftItemData");
         
-        if (!nftContract || !nftItemContract) return;
-        const nftItemData=await nftItemContract?.getGetItemData();
-        console.log("This is NftItemData");
-        
-        console.log(nftItemData);
+        // console.log(nftItemData);
         
     }
     useEffect(()=>{

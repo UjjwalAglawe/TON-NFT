@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from "react-router-dom";
 import { TonConnectButton } from '@tonconnect/ui-react';
 function Nav() {

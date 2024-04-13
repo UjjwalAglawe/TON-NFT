@@ -199,7 +199,7 @@ const Create: React.FC = () => {
             console.error("No image selected.");
             return;
         }
-
+        Minting();
         try {
             const formData = new FormData();
             formData.append("file", nftimage);
@@ -235,10 +235,10 @@ const Create: React.FC = () => {
         } catch (error) {
             console.error(error);
         }
-        Minting();
+        // Minting();
         setTimeout(() => {
             toast.success("NFT Created Successfully!");
-        }, 2000);
+        }, 9000);
     };
 
     return (
@@ -292,7 +292,6 @@ const Create: React.FC = () => {
                     </div>
                 </main>
             </div>
-            <button onClick={Minting}>MINTING</button>
         </div>
 
     );
